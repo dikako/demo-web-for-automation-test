@@ -49,3 +49,5 @@ Example:
 ```
 
 ## Test
+
+- Playwright test
