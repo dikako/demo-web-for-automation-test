@@ -2,7 +2,7 @@ name: Run Playwright After GitHub Pages Deployment
 
 on:
   workflow_run:
-    workflows: ["pages-build-deployment"]
+    workflows: ["Deploy static content to Pages"]
     types:
       - completed
 
