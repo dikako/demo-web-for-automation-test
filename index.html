@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Demo Web App for Automation Testing</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body.login-only {
+      overflow: hidden;
+    }
+
+    .centered-container {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #4facfe;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #00c6ff;
+    }
+
+    #message {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Dashboard Styling */
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+      padding: 0;
+      background-color: #f5f7fa;
+      flex-direction: column;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4facfe;
+      color: white;
+      padding: 20px 30px;
+    }
+
+    .dashboard-header h2 {
+      margin: 0;
+    }
+
+    .logout-icon {
+      font-size: 20px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .logout-icon:hover {
+      background-color: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+    }
+
+    .dashboard-content {
+      flex-grow: 1;
+      padding: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4facfe;
+      color: white;
+    }
+
+    footer {
+      background-color: #e8eaed;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    footer a {
+      color: #0073e6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="login-only">
+
+  <!-- Login View -->
+  <div class="centered-container" id="login-container">
+    <div class="login-box">
+      <h2>Demo Web App Login to Dashboard</h2>
+
+      <label for="username">Username</label>
+      <input test-id="input-username" type="text" id="username" placeholder="Enter username" />
+
+      <label for="password">Password</label>
+      <input test-id="input-password" type="password" id="password" placeholder="Enter password" />
+
+      <button test-id="btn-login" onclick="handleLogin()">Login</button>
+
+      <div id="message" test-id="login-message"></div>
+    </div>
+  </div>
+
+  <!-- Dashboard View -->
+  <div class="dashboard" id="dashboard-container" test-id="dashboard">
+    <div class="dashboard-header">
+      <h2>📊 User Dashboard</h2>
+      <span 
+        test-id="btn-logout" 
+        class="logout-icon" 
+        onclick="handleLogout()" 
+        title="Logout"
+      >🏃‍♂️ Logout</span>
+    </div>
+
+    <div class="dashboard-content">
+      <table test-id="user-table">
+        <thead>
+          <tr>
+            <th test-id="table-header-name">Full Name</th>
+            <th test-id="table-header-gender">Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Andi Saputra</td><td>Male</td></tr>
+          <tr><td>Siti Nurhaliza</td><td>Female</td></tr>
+          <tr><td>Budi Santoso</td><td>Male</td></tr>
+          <tr><td>Rina Kartika</td><td>Female</td></tr>
+          <tr><td>Joko Susilo</td><td>Male</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      Follow: <a test-id="footer-link" href="https://github.com/dikako" target="_blank">https://github.com/dikako</a>
+    </footer>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const message = document.getElementById('message');
+
+      if (username === 'testuser' && password === 'testpass') {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('dashboard-container').style.display = 'flex';
+        document.body.classList.remove('login-only');
+      } else {
+        message.textContent = '❌ Login failed. Try again.';
+        message.style.color = 'red';
+      }
+    }
+
+    function handleLogout() {
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('message').textContent = '';
+      document.getElementById('dashboard-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'flex';
+      document.body.classList.add('login-only');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add('login-only');
+    });
+  </script>
+</body>
+</html>
