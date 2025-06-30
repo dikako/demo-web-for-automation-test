@@ -3,7 +3,7 @@ import { test } from '@playwright/test';
 import { LoginPage } from './pages/loginPage';
 import { DashboardPage } from './pages/DashboardPage';
 
-test.describe('Demo Web App Automation with POM', () => {
+test.describe('Demo Web App Automation', () => {
   const baseUrl = 'https://dikako.github.io/demo-web-for-automation-test/';
 
   test('Login fails with invalid credentials', async ({ page }) => {
